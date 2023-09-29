@@ -52,21 +52,23 @@ const Register = () => {
             <div className="mx-auto md:w-1/2">
                 <h2 className="text-3xl mb-8">Please Register</h2>
                 <form onSubmit={handleRegister}>
-                    <input className="mb-4 w-3/4 py-2 px-4" type="email" name="email" placeholder="Email Address" id="" required />
+                    <input className="mb-4 w-full py-2 px-4" type="email" name="email" placeholder="Email Address" id="" required />
                     <br />
-                    <input
-                        className="mb-4 w-3/4 py-2 px-4"
-                        type={showPassword ? "text" : "password"}
-                        name="password"
-                        placeholder="Password"
-                        id="" required />
-                    <span onClick={() => setShowPassword(!showPassword)}>
-                        {
-                            showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
-                        }
-                    </span>
+                    <div className="mb-4 relative border">
+                        <input
+                            className="w-full py-2 px-4"
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="Password"
+                            id="" required />
+                        <span className="absolute top-3 right-2" onClick={() => setShowPassword(!showPassword)}>
+                            {
+                                showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
+                            }
+                        </span>
+                    </div>
                     <br />
-                    <input className="btn btn-secondary mb-4 w-3/4" type="submit" value="Register" />
+                    <input className="btn btn-secondary mb-4 w-full" type="submit" value="Register" />
                 </form>
                 {
                     registerError && <p className="text-red-700">{registerError}</p>

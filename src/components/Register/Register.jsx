@@ -5,6 +5,8 @@ import { useState } from "react";
 const Register = () => {
     const [registerError, setRegisterError] = useState('');
     const [success, setSuccess] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
     const handleRegister = e => {
         e.preventDefault();
         console.log('form submitting');
@@ -51,7 +53,13 @@ const Register = () => {
                 <form onSubmit={handleRegister}>
                     <input className="mb-4 w-3/4 py-2 px-4" type="email" name="email" placeholder="Email Address" id="" required />
                     <br />
-                    <input className="mb-4 w-3/4 py-2 px-4" type="password" name="password" placeholder="Password" id="" required />
+                    <input
+                        className="mb-4 w-3/4 py-2 px-4"
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        placeholder="Password"
+                        id="" required />
+                    <span onClick={() => setShowPassword(!showPassword)}>Show</span>
                     <br />
                     <input className="btn btn-secondary mb-4 w-3/4" type="submit" value="Register" />
                 </form>

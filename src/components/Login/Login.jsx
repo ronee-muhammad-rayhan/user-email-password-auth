@@ -1,4 +1,4 @@
-import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import auth from "../../firebase/firebase.config";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ const Login = () => {
     const [registerError, setRegisterError] = useState('');
     const [success, setSuccess] = useState('');
     const emailRef = useRef(null);
+    const [loggedInUser, setLoggedInUser] = useState(null);
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -23,6 +24,8 @@ const Login = () => {
             .then(userCredentials => {
                 console.log(userCredentials.user);
                 if (userCredentials.user.emailVerified) {
+                    // setLoggedInUser(userCredentials.user);
+                    setLoggedInUser(auth.currentUser);
                     setSuccess('User Logged in Successfully');
                 } else {
                     alert('Please verify your email address.');
@@ -52,7 +55,16 @@ const Login = () => {
             })
             .catch(error => {
                 console.log(error.message);
+            });
+    }
+
+    const handleSignOut = () => {
+        signOut(auth)
+            .then(() => {
+                setLoggedInUser(auth.currentUser);
+                alert('You have successfully signed out');
             })
+            .catch(error => console.error(error));
     }
 
     return (
@@ -96,6 +108,8 @@ const Login = () => {
                             success && <p className="text-green-600">{success}</p>
                         }
                         <p>New to this website? Please <Link to={'/register'}>Register</Link></p>
+                        <button onClick={handleSignOut}>Sign Out</button>
+                        <p>{loggedInUser ? loggedInUser.displayName : 'none'}</p>
                     </div>
                 </div>
             </div>
